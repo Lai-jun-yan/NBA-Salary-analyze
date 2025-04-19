@@ -3,6 +3,8 @@
 library(broom)
 library(ggplot2)
 library(dplyr)
+library(stargazer)
+library(kableExtra)
 
 data <- data %>%
     mutate(team = na_if(team, ""))

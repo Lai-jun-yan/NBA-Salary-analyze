@@ -12,7 +12,7 @@ ggplot(data, aes(x = rating, y = salary)) +
   theme_minimal()
 
 model_rating_salary <- lm(salary ~ rating, data = data)
-summary(model_rating_salary)
+stargazer(model_rating_salary, type = "text", title = "Regression Results", style = "default")
 
 #薪資跟打球年資的關係
 ggplot(data, aes(x = experience, y = salary)) +
@@ -22,7 +22,7 @@ ggplot(data, aes(x = experience, y = salary)) +
   theme_minimal()
 
 model_exp_salary <- lm(salary ~ experience, data = data)
-summary(model_exp_salary)
+stargazer(model_exp_salary, type = "text", title = "Regression Results", style = "default")
 
 #各隊平均薪資
 ggplot(team_salary, aes(x = reorder(team, avg_salary), y = avg_salary)) +
@@ -61,7 +61,20 @@ ggplot(impact_summary, aes(x = reorder(group, total_effect), y = total_effect)) 
        x = "Variable Type", y = "Total Impact (Sum of Std. Coefficients)") +
   theme_minimal()
 
+#生成影響力薪資表格
+tidy_model_std <- tidy(model_std) %>%
+  filter(term %in% c("rating", "experience")) %>%
+  mutate(impact = abs(estimate)) %>%
+  rename(Estimate = estimate,
+         `Std.Error` = std.error,
+         `t value` = statistic,
+         `p value` = p.value,
+         Variable = term)
 
+tidy_model_std %>%
+  kbl(digits = 4, caption = "Standardized Regression Coefficients") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = F, position = "center")
 
 
 
