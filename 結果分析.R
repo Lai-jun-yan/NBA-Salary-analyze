@@ -24,13 +24,13 @@ ggplot(data, aes(x = experience, y = salary)) +
 model_exp_salary <- lm(salary ~ experience, data = data)
 stargazer(model_exp_salary, type = "text", title = "Regression Results", style = "default")
 
-#各隊平均薪資
-ggplot(team_salary, aes(x = reorder(team, avg_salary), y = avg_salary)) +
-  geom_bar(stat = "identity", fill = "orange") +
-  geom_text(aes(label = round(avg_salary, 0)), hjust = -0.1) +
-  coord_flip() +
-  labs(title = "Average Salary by Team", x = "Team", y = "Avg Salary") +
-  theme_minimal()
+#各隊薪資分布
+ggplot(data, aes(x = team, y = salary)) +
+  geom_boxplot(fill = "skyblue", color = "darkblue") +
+  labs(title = "Salary Distribution by Team",
+       x = "Team", y = "Salary") +
+  theme_minimal() +
+  coord_flip()
 
 anova_result <- aov(salary ~ team, data = data)
 summary(anova_result)
