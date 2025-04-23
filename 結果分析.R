@@ -18,7 +18,7 @@ stargazer(model_rating_salary, type = "text", title = "Regression Results", styl
 ggplot(data, aes(x = experience, y = salary)) +
   geom_point(alpha = 0.5) +
   geom_smooth(method = "lm", color = "red") +
-  labs(title = "Player Rating vs Experience", x = "Rating", y = "Salary") +
+  labs(title = "Player Experience vs Salary", x = "Experience", y = "Salary") +
   theme_minimal()
 
 model_exp_salary <- lm(salary ~ experience, data = data)
